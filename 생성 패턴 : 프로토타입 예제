@@ -1,0 +1,111 @@
+## 스타크래프트 유닛 생성 예제
+
+```
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Unit {  // 유닛 인터페이스
+public:
+    virtual Unit* clone() = 0;             
+    virtual string getName() = 0;
+    virtual int getAttack() { return 0; }
+    virtual int getSpeed() { return 0; }
+    virtual ~Unit() {}
+};
+
+class Marine : public Unit { 
+private:
+    string name;
+    int attack;
+    int speed;
+
+public:
+    Marine(string name, int attack, int speed) : name(name), attack(attack), speed(speed) {}
+
+    string getName() override {
+        return name;
+    }
+
+    int getAttack() override {
+        return attack;
+    }
+
+    int getSpeed() override {
+        return speed;
+    }
+
+    Unit* clone() override {
+        return new Marine(*this);
+    }
+};
+
+class Firebat : public Unit {
+private:
+    string name;
+    int attack;
+    int speed;
+
+public:
+    Firebat(string name, int attack, int speed) : name(name), attack(attack), speed(speed) {}
+
+    string getName() override {
+        return name;
+    }
+
+    int getAttack() override {
+        return attack;
+    }
+
+    int getSpeed() override {
+        return speed;
+    }
+
+    Unit* clone() override {
+        return new Firebat(*this);
+    }
+};
+
+class Medic : public Unit {
+private:
+    string name;
+    int speed;
+
+public:
+    Medic(string name, int speed) : name(name), speed(speed) {}
+
+    string getName() override {
+        return name;
+    }
+
+    int getSpeed() override {
+        return speed;
+    }
+
+    Unit* clone() override {
+        return new Medic(*this);
+    }
+};
+
+int main() {
+    vector<Unit*> units;
+    units.push_back(new Marine("Marine001", 10, 10));
+    units.push_back(new Firebat("Firebat001", 7, 8));
+    units.push_back(new Medic("Medic001", 8));
+
+    vector<Unit*> c_units;
+    c_units.push_back(units[0]->clone());
+    c_units.push_back(units[1]->clone());
+    c_units.push_back(units[2]->clone());
+
+    for (Unit* unit : c_units)
+       cout<< unit->getName()<<endl;
+
+
+    return 0;
+}
+
+
+```
